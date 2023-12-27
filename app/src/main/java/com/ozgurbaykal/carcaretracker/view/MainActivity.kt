@@ -1,5 +1,6 @@
-package com.ozgurbaykal.carcaretracker
+package com.ozgurbaykal.carcaretracker.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,7 +21,12 @@ class MainActivity : ComponentActivity() {
             CarCareTrackerTheme {
 
             }
+
+
         }
+        val intent = Intent(this, WelcomePage::class.java)
+        startActivity(intent)
+
     }
 }
 
@@ -32,4 +38,5 @@ fun GreetingPreview() {
     CarCareTrackerTheme {
 
     }
+    WelcomePage()
 }

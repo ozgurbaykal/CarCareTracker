@@ -1,4 +1,4 @@
-package com.ozgurbaykal.carcaretracker.ui.theme
+package com.ozgurbaykal.carcaretracker.view.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -9,7 +9,3 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
-
-val MainBlue = Color(0xFF324A59)
-val MainGray = Color(0xFFF7F8FB)
-val LightGray = Color(0xFFAAAAAA)

@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">CarCareTracker</string>
+    <string name="title_activity_welcome_page">WelcomePage</string>
+
+    <string name="tutorial_page_1_title">Don\'t forget important dates for your vehicle!</string>
+    <string name="tutorial_page_1_paragraph">With this application, you can record many information such as the maintenance day of your vehicles, insurance expiry date and remind you.</string>
+
+    <string name="tutorial_page_2_title">Let\'s turn on notifications so we can let you know!</string>
+    <string name="tutorial_page_2_paragraph">When you turn on notifications, we will send you reminders a few days before important dates. That\'s why it\'s important to allow notifications.</string>
+
+    <string name="next">Next</string>
+    <string name="continue_and_open_notification">Let\'s do it</string>
+
 </resources>

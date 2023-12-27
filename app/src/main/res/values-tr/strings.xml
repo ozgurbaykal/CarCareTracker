@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CarCareTracker</string>
+    <string name="title_activity_welcome_page">WelcomePage</string>
+
+    <string name="tutorial_page_1_title">Aracınla ilgili önemli tarihleri unutma!</string>
+    <string name="tutorial_page_1_paragraph">Bu uygulama ile arçlarının bakım günü, sigorta bitiş tarihi gibi birçok bilgiyi kaydedebilir ve sana hatırlatılmasını sağlayabilirsin.</string>
+
+    <string name="tutorial_page_2_title">Sana haber verebilmemiz için bildirimleri açalım!</string>
+    <string name="tutorial_page_2_paragraph">Bildirimleri açtığın zaman, önemli tarihlere birkaç gün kala sana hatırlatmalar göndereceğiz. Bu yüzden bildirim izni vermen önemli.</string>
+
+    <string name="next">İleri</string>
+    <string name="continue_and_open_notification">Hadi yapalım!</string>
+</resources>
