@@ -12,7 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.ozgurbaykal.carcaretracker.ui.theme.CarCareTrackerTheme
+import com.ozgurbaykal.carcaretracker.util.DataStoreManager
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,12 +27,27 @@ class MainActivity : ComponentActivity() {
 
 
         }
-        val intent = Intent(this, WelcomePage::class.java)
-        startActivity(intent)
+
+
+        val dataStoreManager = DataStoreManager(applicationContext)
+
+        //IF IS NEW USER SHOW WELCOMEPAGE
+        lifecycleScope.launch {
+            dataStoreManager.readBoolean(DataStoreManager.PreferencesKeys.FIRST_LAUNCH, true)
+                .collect { isFirstLaunch ->
+                    if (isFirstLaunch) {
+                        val intent = Intent(this@MainActivity, WelcomePage::class.java)
+                        startActivity(intent)
+
+                        //SAVE FIRST_LAUNCH TO FALSE
+                        dataStoreManager.saveBoolean(DataStoreManager.PreferencesKeys.FIRST_LAUNCH, false)
+                    }
+                }
+        }
+
 
     }
 }
-
 
 
 @Preview(showBackground = true)
