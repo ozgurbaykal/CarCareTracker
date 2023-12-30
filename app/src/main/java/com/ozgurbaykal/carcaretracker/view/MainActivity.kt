@@ -1,36 +1,27 @@
 package com.ozgurbaykal.carcaretracker.view
 
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.StringRes
+import androidx.activity.viewModels
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -41,26 +32,24 @@ import com.ozgurbaykal.carcaretracker.util.DataStoreManager
 import kotlinx.coroutines.launch
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextDirection.Companion.Content
-import androidx.navigation.NavController
+import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -69,18 +58,36 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ozgurbaykal.carcaretracker.R
+import com.ozgurbaykal.carcaretracker.model.AppDatabase
+import com.ozgurbaykal.carcaretracker.model.Vehicles
+import com.ozgurbaykal.carcaretracker.model.VehiclesRepository
 import com.ozgurbaykal.carcaretracker.ui.theme.LightGray
 import com.ozgurbaykal.carcaretracker.ui.theme.MainBlue
-import com.ozgurbaykal.carcaretracker.ui.theme.MainGray
-
+import com.ozgurbaykal.carcaretracker.viewmodel.VehiclesViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val viewModel: VehiclesViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CarCareTrackerTheme {
                 val navController = rememberNavController()
 
-                MyBottomNavigation(navController)
+                MyBottomNavigation(navController, viewModel)
+
+
+
+
+
+
             }
 
 
@@ -104,21 +111,93 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
+
+
+
         }
 
 
+
+        /*CoroutineScope(Dispatchers.IO).launch {
+            val database = AppDatabase.getDatabase(this@MainActivity)
+            val dao = database.vehicleDao()
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dateString = "29/12/2024"
+
+            val specificDate: Date = dateFormat.parse(dateString) ?: Date()
+
+
+            val newVehicle = Vehicles(
+                vehicleName = "My Car",
+                insuranceExpiryDate = specificDate, // Milisaniye cinsinden zaman damgası
+                maintenanceDate = specificDate, // Başka bir tarih için de aynı işlemi yapabilirsiniz
+                iconResourceName = "icon_res_name"
+            )
+            dao.insertVehicle(newVehicle)
+
+            Log.i("MainActivity", "AllVehicles: ${dao.getAllVehicles()}")
+            Log.i("MainActivity", "AAAAAAAA")
+        }*/
+
+    }
+
+    @Composable
+    fun VehiclesRow(vehicle: Vehicles) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Araç ikonunu göster
+            Icon(
+                painter = painterResource(id = R.drawable.ic_launcher_foreground), // Örnek ikon
+                contentDescription = vehicle.vehicleName,
+                modifier = Modifier.size(40.dp)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            // Araç bilgilerini göster
+            Column {
+                Text(vehicle.vehicleName, fontWeight = FontWeight.Bold)
+                Text("Sigorta Bitiş: ${vehicle.insuranceExpiryDate}")
+                Text("Bakım Tarihi: ${vehicle.maintenanceDate}")
+            }
+        }
     }
 }
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyBottomNavigation(navController: NavHostController) {
+fun MyBottomNavigation(navController: NavHostController, viewModel: VehiclesViewModel) {
+
     Scaffold(
         modifier = Modifier,
         floatingActionButton = {
             Box() {
                 FloatingActionButton(
-                    onClick = { /* stub */ },
+                    onClick = {
+
+                        CoroutineScope(Dispatchers.IO).launch {
+
+                            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                            val dateString = "29/12/2024"
+
+                            val specificDate: Date = dateFormat.parse(dateString) ?: Date()
+
+
+                            val newVehicle = Vehicles(
+                                vehicleName = "My Car",
+                                insuranceExpiryDate = specificDate, // Milisaniye cinsinden zaman damgası
+                                maintenanceDate = specificDate, // Başka bir tarih için de aynı işlemi yapabilirsiniz
+                                iconResourceName = "icon_res_name"
+                            )
+                            viewModel.insertVehicle(newVehicle)
+
+                        }
+
+
+                    },
                     containerColor = MainBlue,
                     shape = CircleShape,
                     modifier = Modifier
@@ -153,7 +232,8 @@ fun MyBottomNavigation(navController: NavHostController) {
                     EnterTransition.None
                 }
             ) {
-                composable("home") { HomeScreen(navController) }
+
+                composable("home") { HomeScreen(navController,viewModel) }
                 composable("settings") { SettingsScreen(navController) }
             }
         },
@@ -226,82 +306,7 @@ fun MyBottomNavigation(navController: NavHostController) {
         }
     )
 }
-/* BottomAppBar(
-                 containerColor = Color.White,
-                 contentColor = MainBlue,
-                 modifier = Modifier.shadow(
-                     elevation = 30.dp,
-                     ambientColor = Color.Black,
-                     spotColor = Color.Black
-                 ),
-             ) {
-                 Column(
-                     Modifier
-                         .weight(1f)
-                         .fillMaxHeight()
-                         .fillMaxWidth()
-                         .clickable(onClick = {
-                             //navController.navigate("home")
-                         }),
-                     horizontalAlignment = Alignment.CenterHorizontally,
-                     verticalArrangement = Arrangement.Center,
-                 ) {
-                     Icon(Icons.Filled.Home, contentDescription = "Home", modifier = Modifier.padding(end = 40.dp))
-                 }
-                 Column(
-                     Modifier
-                         .weight(1f)
-                         .fillMaxHeight()
-                         .fillMaxWidth()
-                         .clickable(onClick = {
-                             //navController.navigate("settings")
-                         }),
-                     horizontalAlignment = Alignment.CenterHorizontally,
-                     verticalArrangement = Arrangement.Center,
-                 ) {
-                     Icon(Icons.Filled.Settings, contentDescription = "Settings", modifier = Modifier.padding(start = 40.dp))
-                 }
 
-
-             }*/
-
-/*@Composable
-fun aa(){
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            BottomNavigation {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
-                items.forEach { screen ->
-                    BottomNavigationItem(
-                        icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-                        label = { Text(stringResource(screen.resourceId)) },
-                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                        onClick = {
-                            navController.navigate(screen.route) {
-                                // Pop up to the start destination of the graph to
-                                // avoid building up a large stack of destinations
-                                // on the back stack as users select items
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                // Avoid multiple copies of the same destination when
-                                // reselecting the same item
-                                launchSingleTop = true
-                                // Restore state when reselecting a previously selected item
-                                restoreState = true
-                            }
-                        }
-                    )
-                }
-            }
-        }
-    ) { innerPadding ->
-
-    }
-}
-*/
 
 @Preview(showBackground = true)
 @Composable
@@ -310,7 +315,7 @@ fun GreetingPreview() {
 
         val navController = rememberNavController()
 
-        MyBottomNavigation(navController)
+        //MyBottomNavigation(navController)
     }
 
 }
