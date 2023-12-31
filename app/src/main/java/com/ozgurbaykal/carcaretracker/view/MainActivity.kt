@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
         }
 
 
-        val dataStoreManager = DataStoreManager(applicationContext)
+        val dataStoreManager = DataStoreManager.getInstance(applicationContext)
 
         //IF IS NEW USER SHOW WELCOMEPAGE
         lifecycleScope.launch {
