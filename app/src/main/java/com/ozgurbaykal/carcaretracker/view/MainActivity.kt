@@ -82,15 +82,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 MyBottomNavigation(navController, viewModel)
-
-
-
-
-
-
             }
-
-
         }
 
 
@@ -111,61 +103,9 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
-
-
-
-        }
-
-
-
-        /*CoroutineScope(Dispatchers.IO).launch {
-            val database = AppDatabase.getDatabase(this@MainActivity)
-            val dao = database.vehicleDao()
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val dateString = "29/12/2024"
-
-            val specificDate: Date = dateFormat.parse(dateString) ?: Date()
-
-
-            val newVehicle = Vehicles(
-                vehicleName = "My Car",
-                insuranceExpiryDate = specificDate, // Milisaniye cinsinden zaman damgası
-                maintenanceDate = specificDate, // Başka bir tarih için de aynı işlemi yapabilirsiniz
-                iconResourceName = "icon_res_name"
-            )
-            dao.insertVehicle(newVehicle)
-
-            Log.i("MainActivity", "AllVehicles: ${dao.getAllVehicles()}")
-            Log.i("MainActivity", "AAAAAAAA")
-        }*/
-
-    }
-
-    @Composable
-    fun VehiclesRow(vehicle: Vehicles) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Araç ikonunu göster
-            Icon(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground), // Örnek ikon
-                contentDescription = vehicle.vehicleName,
-                modifier = Modifier.size(40.dp)
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            // Araç bilgilerini göster
-            Column {
-                Text(vehicle.vehicleName, fontWeight = FontWeight.Bold)
-                Text("Sigorta Bitiş: ${vehicle.insuranceExpiryDate}")
-                Text("Bakım Tarihi: ${vehicle.maintenanceDate}")
-            }
         }
     }
+
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -219,18 +159,6 @@ fun MyBottomNavigation(navController: NavHostController, viewModel: VehiclesView
                 navController,
                 startDestination = "home",
                 Modifier.padding(innerPadding),
-                enterTransition = {
-                    EnterTransition.None
-                },
-                exitTransition = {
-                    ExitTransition.None
-                },
-                popExitTransition = {
-                    ExitTransition.None
-                },
-                popEnterTransition = {
-                    EnterTransition.None
-                }
             ) {
 
                 composable("home") { HomeScreen(navController,viewModel) }
