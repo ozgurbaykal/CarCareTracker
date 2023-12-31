@@ -10,4 +10,13 @@
 
     <string name="next">İleri</string>
     <string name="continue_and_open_notification">Hadi yapalım!</string>
+
+    <string name="home">Araçlar</string>
+    <string name="settings">Ayarlar</string>
+
+    <string name="insurance_expiry">Sigorta Bitiş: </string>
+    <string name="maintenance_date">Bakım Tarihi: </string>
+
+    <string name="end">SON</string>
+
 </resources>

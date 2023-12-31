@@ -10,6 +10,6 @@ data class Vehicles(
     val vehicleName: String,
     val insuranceExpiryDate: Date,
     val maintenanceDate: Date,
-    val iconResourceName: String
-
+    val iconResourceName: String,
+    val iconColor: String = "#FFFFFF"
     )

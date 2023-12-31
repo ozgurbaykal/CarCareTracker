@@ -11,7 +11,12 @@
     <string name="next">Next</string>
     <string name="continue_and_open_notification">Let\'s do it</string>
 
-    <string name="home">Home</string>
+    <string name="home">Vehicles</string>
     <string name="settings">Settings</string>
+
+    <string name="insurance_expiry">Insurance: </string>
+    <string name="maintenance_date">Service Date: </string>
+
+    <string name="end">END</string>
 
 </resources>
