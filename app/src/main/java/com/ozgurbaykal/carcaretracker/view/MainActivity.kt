@@ -1,5 +1,6 @@
 package com.ozgurbaykal.carcaretracker.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -46,9 +47,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -110,6 +113,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyBottomNavigation(navController: NavHostController, viewModel: VehiclesViewModel) {
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier,
@@ -118,7 +122,9 @@ fun MyBottomNavigation(navController: NavHostController, viewModel: VehiclesView
                 FloatingActionButton(
                     onClick = {
 
-                        CoroutineScope(Dispatchers.IO).launch {
+                        context.startActivity(Intent(context, AddVehicleScreen::class.java))
+
+                        /*CoroutineScope(Dispatchers.IO).launch {
 
                             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                             val dateString = "29/12/2024"
@@ -134,7 +140,7 @@ fun MyBottomNavigation(navController: NavHostController, viewModel: VehiclesView
                             )
                             viewModel.insertVehicle(newVehicle)
 
-                        }
+                        }*/
 
 
                     },

@@ -19,4 +19,6 @@
 
     <string name="end">SON</string>
 
+    <string name="back">Geri Dön</string>
+    <string name="add_vehicle">Araç Ekle</string>
 </resources>
