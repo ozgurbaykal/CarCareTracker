@@ -8,8 +8,21 @@ import java.util.Date
 data class Vehicles(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val vehicleName: String,
+    val vehicleBrand: String,
+    val vehicleBrandModel: String,
+    val vehiclePlate: String,
+    val odometerValue: Double,
+    val odometerType: Odometers,
     val insuranceExpiryDate: Date,
     val maintenanceDate: Date,
     val iconResourceName: String,
-    val iconColor: String = "#FFFFFF"
+    val iconColor: String = "#000000",
+    val creationDate: Date,
+    val note: String? = null,
     )
+
+
+enum class Odometers{
+    KM,
+    MIL
+}

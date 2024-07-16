@@ -2,4 +2,8 @@
 <resources>
 
     <style name="Theme.CarCareTracker" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="CustomDatePickerDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorAccent">@color/main_blue</item>
+    </style>
 </resources>

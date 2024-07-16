@@ -22,4 +22,18 @@
     <string name="back">Go Back</string>
     <string name="add_vehicle">Add Vehicle</string>
 
+    <string name="plate">Plate</string>
+    <string name="brand">Brand</string>
+    <string name="model">Model</string>
+    <string name="engineNumber">VIN</string>
+
+    <string name="odometer_info">%1$s Info</string>
+
+    <string name="date_picker_service">Service Date</string>
+    <string name="date_picker_insurance">Insurance Date</string>
+
+    <string name="note">Note</string>
+
+    <string name="select_vehicle_type">Select Vehicle Type</string>
+    <string name="select_color">Select Vehicle Color</string>
 </resources>

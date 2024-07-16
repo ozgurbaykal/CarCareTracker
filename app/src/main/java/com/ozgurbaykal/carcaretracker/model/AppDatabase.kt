@@ -15,7 +15,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@Database(entities = [Vehicles::class], version = 2)
+@Database(entities = [Vehicles::class], version = 4)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao

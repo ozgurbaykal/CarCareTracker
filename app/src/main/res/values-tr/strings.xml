@@ -21,4 +21,19 @@
 
     <string name="back">Geri Dön</string>
     <string name="add_vehicle">Araç Ekle</string>
+
+    <string name="plate">Plaka</string>
+    <string name="brand">Marka</string>
+    <string name="model">Model</string>
+    <string name="engineNumber">Şasi Numarası</string>
+
+    <string name="odometer_info">%1$s Bilgisi</string>
+
+    <string name="date_picker_service">Muayene Tarihi</string>
+    <string name="date_picker_insurance">Sigorta Bitiş</string>
+
+    <string name="note">Not</string>
+
+    <string name="select_vehicle_type">Araç Tipi Seç</string>
+    <string name="select_color">Araç Rengini Seç</string>
 </resources>
